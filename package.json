@@ -1,0 +1,15 @@
+{
+  "name": "programa1",
+  "version": "1.0.0",
+  "description": "primer programa",
+  "main": "programa.js",
+  "dependencies": {
+    "yargs": "^13.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MateoMesa tteo145@gmail.com",
+  "license": "ISC"
+}

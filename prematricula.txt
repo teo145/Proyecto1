@@ -1,0 +1,1 @@
+El estudiante mateo con identificación 456123, se prematriculo a la materia Matematicas con id 1. La duración de la materia es de 8 horas y tiene un valor de 20000 pesos.

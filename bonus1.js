@@ -19,10 +19,8 @@ const argv = require('yargs')
             .argv;
 const express = require('express');
 const app = express();
-const imprimir = (obj,time,callback) => {
-    setTimeout(function(){
-        callback (`El nombre de la materia es: ${obj.nombre} y su id es: ${obj.id}. La duración de la materia es de: ${obj.duracion} horas y tiene un valor de: ${obj.precio} pesos.`);
-    } ,time);
+const imprimir = (obj,i) => {
+    return `Materia ${i+1}: El nombre de la materia es: ${obj.nombre} y su id es: ${obj.id}. La duración de la materia es de: ${obj.duracion} horas y tiene un valor de: ${obj.precio} pesos.`;
 }
 let txthtml = '';
 let imphtml = (txt)=> {
@@ -32,7 +30,6 @@ let imphtml = (txt)=> {
 }
 
 let materias = [];
-let time = 2000;
 materias = [
     {nombre:"Matematicas", precio:20000, duracion:8, id:1},
     {nombre:"Ingles", precio:0, duracion:20, id:2},
@@ -41,26 +38,25 @@ materias = [
 
 if (argv.id_materia === undefined){
     for(let i=0;i<materias.length;i++){
-       imprimir(materias[i],time,function(resultado){
-           console.log(resultado);
-        });
-        time+=2000;
-    }    
+        let resultado = imprimir(materias[i],i);
+        txthtml = txthtml + resultado + '\n';
+    }   
 }else{
     let materia = materias.find( m => m.id === argv.id_materia);
     if (materia === undefined){
-        console.log ('Se ingreso un id de materia incorrecto.');
+        ///txthtml ='Se ingreso un id de materia incorrecto.';
+        console.log(argv.id_materia);
     }else {
         let crearArchivo = (materia,argv) =>{
             let texto =`El estudiante ${argv.nombre_estudiante} con identificación ${argv.identificacion_estudiante}, se prematriculo a la materia ${materia.nombre} con id ${materia.id}. La duración de la materia es de ${materia.duracion} horas y tiene un valor de ${materia.precio} pesos.`;
             fs.writeFile('prematricula.txt',texto,(err)=>{
                if(err) throw(err);
-                console.log('Se creo con exito el archivo');
+                txthtml ='Se creo con exito el archivo';
             });
+            txthtml = texto + ' ' + txthtml;
         }
         crearArchivo(materia,argv);
     }
 }
- 
+imphtml(txthtml);
 app.listen(3000)
-
